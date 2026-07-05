@@ -1,0 +1,88 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Golden Eye Vidyapeeth</title><link rel="stylesheet" href="/css/app.css"></head><body>
+<div id="ptr-spinner"></div>
+<div id="pg-switcher" class="pg-login hidden">
+<div style="width:100%;max-width:400px;padding:0 4px">
+<div style="text-align:center;margin-bottom:24px">
+<div style="background:#5a0a0a;border-radius:10px;padding:12px 20px;display:inline-block;margin-bottom:8px"><div style="font-size:16px;font-weight:700;color:#f0c040">Golden Eye Vidyapeeth</div><div style="font-size:11px;color:#f5e6b0;margin-top:2px;opacity:.85">IIT-JEE · NEET · IAS · IIM · Vijayawada</div></div>
+<div style="font-size:13px;color:#aaa;margin-top:6px">Choose an account</div>
+</div>
+<div id="sw-accounts" style="display:flex;flex-direction:column;gap:12px;margin-bottom:16px"></div>
+<div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;color:#ccc;font-size:12px"><div style="flex:1;height:1px;background:#e5e5e5"></div><span>or</span><div style="flex:1;height:1px;background:#e5e5e5"></div></div>
+<button onclick="showLogin(false)" style="width:100%;padding:12px;border:2px dashed #d4a017;border-radius:12px;background:#fdf9ee;color:#5a0a0a;font-size:14px;font-weight:600;cursor:pointer">+ Add another account</button>
+</div>
+</div>
+<div id="pg-pin-prompt" class="pg-login hidden">
+<div class="login-card">
+<div class="login-logo"><div class="login-name">Golden Eye Vidyapeeth</div></div>
+<div style="text-align:center;margin-bottom:16px"><div id="pin-avatar" style="width:60px;height:60px;border-radius:50%;background:#5a0a0a;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;color:#f0c040;margin:0 auto 8px"></div><div id="pin-name" style="font-size:16px;font-weight:700;color:#111"></div><div style="font-size:12px;color:#888;margin-top:2px">Enter PIN to continue</div></div>
+<div class="fg"><input type="password" id="pp-pin" class="tinput" placeholder="Enter host PIN" onkeydown="if(event.key==='Enter')doPinLogin()"></div>
+<div id="pp-err" class="errmsg hidden"></div>
+<button class="btn-login" onclick="doPinLogin()">Continue</button>
+<button onclick="showSwitcher()" style="width:100%;margin-top:10px;padding:10px;background:transparent;border:none;color:#888;cursor:pointer;font-size:13px">← Back to accounts</button>
+</div>
+</div>
+<div id="pg-login" class="pg-login hidden"><div class="login-card">
+<div class="login-logo"><div class="login-name">Golden Eye Vidyapeeth</div><div class="login-sub">IIT-JEE · NEET · IAS/IIM · Vijayawada</div></div>
+<div class="host-box"><div class="hbl">Principal / Host</div><input type="password" id="hpin" placeholder="Enter host PIN" maxlength="20" onkeydown="if(event.key==='Enter')hostLogin()"><div id="herr" class="errmsg hidden"></div><button class="btn-host" onclick="hostLogin()">Enter as Host</button></div>
+<div class="or-line"><span>or sign in as</span></div>
+<div style="display:flex;gap:10px;margin-bottom:14px"><button id="btn-student" onclick="setRole('student')" style="flex:1;padding:10px;border-radius:6px;border:2px solid #5a0a0a;background:#5a0a0a;color:#f0c040;font-weight:700;cursor:pointer;font-size:13px">Student</button><button id="btn-teacher" onclick="setRole('teacher')" style="flex:1;padding:10px;border-radius:6px;border:2px solid #ddd;background:#fff;color:#555;font-weight:700;cursor:pointer;font-size:13px">Teacher</button></div>
+<div class="fg"><label id="login-id-label">Enrollment Number</label><input type="text" id="lemail" class="tinput" placeholder="Enter enrollment number"></div>
+<div class="fg"><label>Password</label><input type="password" id="lpass" class="tinput" placeholder="Enter your password" onkeydown="if(event.key==='Enter')doLogin()"></div>
+<div id="lerr" class="errmsg hidden"></div>
+<button class="btn-login" onclick="doLogin()">Sign in</button>
+<div class="lhint">Students: enrollment number · Teachers: email</div>
+<div id="back-sw-wrap" class="hidden" style="margin-top:12px;text-align:center"><button onclick="showSwitcher()" style="background:none;border:none;color:#888;cursor:pointer;font-size:13px">← Back to accounts</button></div>
+</div></div>
+<div id="pg-app" class="pg-app hidden">
+<div class="sidebar" id="sidebar"><div class="sbtop"><div class="sblogo"><div><div class="sbsn">Golden Eye</div><div class="sbss">Vidyapeeth</div></div></div><div class="sbuser"><span class="sbbadge" id="sbrole">-</span><span class="sbname" id="sbname"></span></div></div><div class="sblabel">Classes</div><div id="sbclasses"></div><div class="sbfoot"><button class="sbout" onclick="doLogout()">Sign out</button></div></div>
+<div class="main" id="main">
+<div class="topbar"><button class="mbtn" onclick="toggleSB()">Menu</button><div class="tbcls" id="tbcls">-</div><div class="tbemail" id="tbemail"></div></div>
+<div class="tabbar">
+<button class="tab active" data-tab="home" onclick="goTab('home',this)">🏠 Home</button>
+<button class="tab" data-tab="notif" onclick="goTab('notif',this)">🔔 Notifications</button>
+<button class="tab" data-tab="assign" onclick="goTab('assign',this)">📚 Assignments</button>
+<button class="tab" data-tab="marks" onclick="goTab('marks',this)">🏆 Marks</button>
+<button class="tab tab-admin hidden" data-tab="admin" onclick="goTab('admin',this)">🛡 Admin</button>
+</div>
+<div class="panel active" id="panel-home">
+<div class="banner"><div><div class="bname">Golden Eye Vidyapeeth</div><div class="bsub">School and Junior College · Vijayawada, AP</div><div class="btag">IIT-JEE · NEET · IAS · IIM</div></div></div>
+<div class="pcard"><div class="pstrip" id="pstrip"></div><div class="pbody"><div class="pavwrap"><div class="pav" id="pav">--</div></div><div class="ptop"><div><div class="pname" id="pname">-</div><div class="prole" id="prole"></div></div></div><div class="pgrid" id="pgrid"></div></div></div>
+<div class="statrow" id="statrow"></div>
+<div id="changepwbtnwrap" class="hidden" style="margin-top:10px"><button onclick="openChangePW()" style="font-size:13px;padding:9px 18px;border-radius:6px;border:1px solid #1d4ed8;background:transparent;color:#1d4ed8;cursor:pointer;font-weight:600">Change my password</button></div>
+<div id="changepinbtnwrap" class="hidden" style="margin-top:10px"><button onclick="openChangePIN()" style="font-size:13px;padding:9px 18px;border-radius:6px;border:1px solid #5a0a0a;background:transparent;color:#5a0a0a;cursor:pointer;font-weight:600">Change principal PIN</button></div>
+</div>
+<div class="panel hidden" id="panel-notif"><div class="bar"><div class="bartitle">🔔 Notifications</div></div><div id="notif-send-area" class="hidden" style="background:#fff;border:1px solid #e5e5e5;border-radius:10px;padding:16px;margin-bottom:14px"><div class="fg"><label>Message</label><textarea id="notif-msg" rows="3" placeholder="Type a notification..."></textarea></div><div class="fg"><label>Image (optional)</label><input type="file" id="notif-img" accept="image/*" style="padding:8px;width:100%;border:1px solid #ddd;border-radius:6px"></div><button class="btn-gold" onclick="sendNotification()">Send</button></div><div id="notif-feed"><div class="empty">No notifications yet.</div></div></div>
+<div class="panel hidden" id="panel-assign"><div class="bar"><div class="bartitle" id="atitle">📚 Assignments</div><button class="btn-gold hidden" id="btn-aa" onclick="openAM()">+ Add</button></div><div id="alist"></div></div>
+<div class="panel hidden" id="panel-marks">
+<div class="bar"><div class="mtabs"><button class="mtab active" onclick="mView('results',this)">📊 Results</button><button class="mtab hidden" id="btn-at" onclick="mView('add',this)">+ Add test</button></div></div>
+<div id="mresults"></div>
+<div id="madd" class="hidden"><div class="fcard">
+<div class="twocol"><div class="fg"><label>Test name</label><input id="tname" placeholder="e.g. Unit Test 1"></div><div class="fg"><label>Subject</label><input id="tsubj" placeholder="Mathematics"></div></div>
+<div class="twocol"><div class="fg"><label>Max marks</label><input id="tmax" type="number" placeholder="50"></div><div class="fg"><label>Date</label><input id="tdate" type="date"></div></div>
+<div style="border:2px dashed #d4a017;border-radius:8px;padding:14px;margin-bottom:12px;background:#fdf9ee">
+<div style="font-size:12px;font-weight:700;color:#5a0a0a;margin-bottom:4px">Import from Excel or CSV</div>
+<div style="font-size:11px;color:#888;margin-bottom:8px">Columns: Name, Enrollment, Marks</div>
+<input type="file" id="xl-file" accept=".xlsx,.xls,.csv" style="width:100%;padding:7px;border:1px solid #ddd;border-radius:6px;margin-bottom:8px;font-size:12px">
+<button onclick="importExcel()" style="width:100%;padding:9px;background:#1d4ed8;color:#fff;border:none;border-radius:6px;font-weight:700;cursor:pointer;font-size:13px">Import and publish</button>
+<div id="xl-status" style="display:none;margin-top:12px"><div style="display:flex;align-items:center;gap:10px;margin-bottom:6px"><div id="xl-spinner" style="width:18px;height:18px;border:3px solid #e5e5e5;border-top-color:#1d4ed8;border-radius:50%;animation:spin 0.8s linear infinite;flex-shrink:0"></div><div id="xl-caption" style="font-size:13px;font-weight:600;color:#333"></div></div><div style="height:4px;background:#e5e5e5;border-radius:2px"><div id="xl-progress" style="height:100%;background:#1d4ed8;border-radius:2px;width:0%;transition:width 0.5s"></div></div></div>
+</div>
+<div style="border-top:1px solid #eee;padding-top:12px;margin-bottom:12px"><div style="font-size:12px;font-weight:700;color:#666;margin-bottom:10px">Or add manually</div>
+<div class="twocol"><div class="fg"><label>Enrollment No.</label><div class="acwrap"><input id="st-enroll" placeholder="Type enrollment" autocomplete="off" oninput="searchByEnroll()"><div class="acdrop hidden" id="stdrop"></div></div></div><div class="fg"><label>Name</label><input id="stsearch" placeholder="Auto-fills" style="background:#f0f0f0" readonly></div></div>
+<button onclick="addFromEnroll()" style="margin-bottom:12px;padding:8px 18px;background:#5a0a0a;color:#f0c040;border:none;border-radius:6px;cursor:pointer;font-size:13px;font-weight:700">+ Add student</button>
+<div id="stlist"></div></div>
+<button class="btn-gold full" onclick="submitMarks()">Generate ranks and publish</button>
+</div></div></div>
+<div class="panel hidden" id="panel-admin"><div class="adhdr"><div><div class="adtitle">🛡 Admin Panel</div><div class="adsub" id="adsub">Golden Eye Vidyapeeth</div></div><label class="toglbl"><div class="togtrack"><input type="checkbox" onchange="devMode(this.checked)"><span class="togthumb"></span></div>Dev</label></div><div class="adstats" id="adstats"></div><div class="sechdr"><div class="sectitle">Classes</div><button class="btn-gold" onclick="openCM()">+ Add class</button></div><div id="clsgrid"></div><div class="sechdr" style="margin-top:16px"><div class="sectitle" id="usectitle">Users</div><button class="btn-gold" onclick="openUM()">+ Add user</button></div><div id="usertbl"></div></div>
+</div></div>
+<div class="overlay hidden" id="overlay" onclick="closeAll()"></div>
+<div class="modal hidden" id="modal-profile"><div class="mtitle">Edit profile</div><div class="fg"><label>Name</label><input id="pmname"></div><div class="fg"><label>Phone</label><input id="pmphone" type="tel"></div><div class="fg" id="pmswrap"><label>Subject</label><input id="pmsubj"></div><div class="fg"><label>Date of birth</label><input id="pmdob" type="date"></div><div class="fg"><label>Address</label><textarea id="pmaddr" rows="2"></textarea></div><div class="passsep">Change password (optional)</div><div class="fg"><label>Current password</label><input id="pmcur" type="password"></div><div class="fg"><label>New password</label><input id="pmnew" type="password"></div><div id="pmerr" class="errmsg hidden"></div><div class="mbtns"><button class="btn-cancel" onclick="closeAll()">Cancel</button><button class="btn-confirm" onclick="saveProfile()">Save</button></div></div>
+<div class="modal hidden" id="modal-changepw"><div class="mtitle">Change password</div><div class="fg"><label>Current password</label><input id="cpw-cur" type="password"></div><div class="fg"><label>New password</label><input id="cpw-new" type="password" placeholder="Min 4 characters"></div><div id="cpw-err" class="errmsg hidden"></div><div class="mbtns"><button class="btn-cancel" onclick="closeAll()">Cancel</button><button class="btn-confirm" onclick="saveChangePW()">Save</button></div></div>
+<div class="modal hidden" id="modal-assign"><div class="mtitle">Add assignment</div><div class="fg"><label>Title</label><input id="amtitle"></div><div class="twocol"><div class="fg"><label>Subject</label><input id="amsubj"></div><div class="fg"><label>Due date</label><input id="amdue" type="date"></div></div><div class="fg"><label>Description</label><textarea id="amdesc" rows="3"></textarea></div><div class="mbtns"><button class="btn-cancel" onclick="closeAll()">Cancel</button><button class="btn-confirm" onclick="submitAssign()">Add</button></div></div>
+<div class="modal hidden" id="modal-user"><div class="mtitle">Add user</div><div class="fg"><label>Full name</label><input id="umname"></div><div class="fg"><label id="um-id-label">Enrollment Number</label><input id="umemail" placeholder="Enter enrollment number" type="text"></div><div class="twocol"><div class="fg"><label>Role</label><select id="umrole" onchange="updateUserModal(this.value)"><option value="student">Student</option><option value="teacher">Teacher</option></select></div><div class="fg"><label>Class</label><select id="umclass"></select></div></div><div id="umerr" class="errmsg hidden"></div><div class="mbtns"><button class="btn-cancel" onclick="closeAll()">Cancel</button><button class="btn-confirm" onclick="submitUser()">Add user</button></div></div>
+<div class="modal hidden" id="modal-class"><div class="mtitle">Add class</div><div class="fg"><label>Class name</label><input id="cmname" placeholder="e.g. Class 10-A"></div><div id="cmerr" class="errmsg hidden"></div><div class="mbtns"><button class="btn-cancel" onclick="closeAll()">Cancel</button><button class="btn-confirm" onclick="submitClass()">Add class</button></div></div>
+<div class="modal hidden" id="modal-editmarks"><div class="mtitle">Edit result</div><input type="hidden" id="em-test-id"><div class="twocol"><div class="fg"><label>Test name</label><input id="em-name"></div><div class="fg"><label>Subject</label><input id="em-subj"></div></div><div class="fg"><label>Max marks</label><input id="em-max" type="number" style="width:120px"></div><div id="em-students-list"></div><div class="mbtns"><button class="btn-cancel" onclick="closeAll()">Cancel</button><button class="btn-confirm" onclick="submitEditMarks()">Save</button></div></div>
+<div class="modal hidden" id="modal-sw-edit"><div class="mtitle">Account options</div><div id="sw-edit-info" style="margin-bottom:16px;padding:12px;background:#f7f7f5;border-radius:8px;font-size:13px;color:#555"></div><div class="mbtns"><button class="btn-cancel" onclick="closeAll()">Cancel</button><button onclick="swEditAccount()" style="padding:9px 18px;background:#1d4ed8;color:#fff;border:none;border-radius:6px;cursor:pointer;font-weight:700;margin-right:8px">Edit / Re-login</button><button onclick="swDeleteAccount()" class="btn-confirm" style="background:#dc2626">Remove</button></div></div>
+<div class="modal hidden" id="modal-changepin"><div class="mtitle">Change Principal PIN</div><div class="fg"><label>Current PIN</label><input id="cpin-cur" type="password" placeholder="Enter current PIN"></div><div class="fg"><label>New PIN</label><input id="cpin-new" type="password" placeholder="Min 4 digits"></div><div id="cpin-err" class="errmsg hidden"></div><div class="mbtns"><button class="btn-cancel" onclick="closeAll()">Cancel</button><button class="btn-confirm" onclick="saveChangePIN()">Save</button></div></div>
+<style>@keyframes spin{to{transform:rotate(360deg)}}</style>
+<script src="/js/app.js"></script></body></html>
+
